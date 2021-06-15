@@ -3,38 +3,32 @@ const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
-const glyphStates = {
-   "♡": "♥",
-   "♥": "♡"
- };
-
- const colorStates = {
-   "red" : "",
-   "": "red"
- };
-
- const articleHearts = document.querySelectorAll(".like-glyph");
-
- function likeCallback(e) {
+const glyphs=document.getElementsByClassName('like-glyph');
+ const like=(e) =>{
    const heart = e.target;
-   mimicServerCall("bogusUrl")
-    //OR: mimicServerCall("bogusUrl", {forceFailure: true})
-     .then(function(serverMessage){
-        heart.innerText = glyphStates[heart.innerText];
-        heart.style.color = colorStates[heart.style.color];
+   mimicServerCall("url")
+     .then(()=>{
+       if(heart.innerText===EMPTY_HEART){
+         heart.innerText=FULL_HEART
+         heart.classList.add('activated-heart')
+
+       }else{
+         heart.innerText=EMPTY_HEART
+         heart.classList.remove('activated-heart')
+       }
      })
-     .catch(function(error) {
+     .catch(e =>{
        const modal = document.getElementById("modal");
        modal.className = "";
-       modal.innerText = error;
-       setTimeout(() =>  modal.className = "hidden", 3000);
+       modal.innerText = e;
+       setTimeout(() =>  modal.className = "hidden", 2000);
      });
  }
 
- for (const glyph of articleHearts) {
-   glyph.addEventListener("click", likeCallback);
- }
+ [...glyphs].forEach((glyph)=>{
+   glyph.onclick=(e)=>like(e);
 
+ })
 
 
 //------------------------------------------------------------------------------
