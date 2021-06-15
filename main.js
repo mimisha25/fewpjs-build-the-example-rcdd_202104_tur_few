@@ -40,9 +40,9 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
     setTimeout(function() {
       let fail = Math.random() < .2
       if (fail) {
-        reject("Random server error. Try again.");
+        reject("Error!");
       } else {
-        resolve("Pretend remote server notified of action!");
+        resolve("New action");
       }
     }, 300);
   });
